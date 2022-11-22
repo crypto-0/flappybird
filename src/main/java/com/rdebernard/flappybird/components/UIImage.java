@@ -1,14 +1,23 @@
 package com.rdebernard.flappybird.components;
 
 import com.rdebernard.flappybird.coremodules.Renderer;
+import com.rdebernard.flappybird.coremodules.Sprite;
+import com.rdebernard.phanes.entities.Component;
 
-public class UIImage extends Renderer{
+public class UIImage extends Renderer implements Component{
 
   public UIImage(){
     this.sprite = null;
     this.color = null;
     this.rendererPriority = 0;
     this.enabled = false;
+  }
+  public UIImage(Sprite sprite,int rendererPriority){
+    this.sprite = sprite;
+    this.rendererPriority = rendererPriority;
+    this.color = null;
+    this.enabled = false;
+
   }
   public UIImage(UIImage uiImage){
     this.sprite = uiImage.sprite;

@@ -13,10 +13,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class MenuScene extends Scene{
+public class MainScene extends Scene{
 
   AssetManager assetManager;
-  public MenuScene(World world){
+  public MainScene(World world){
     super(world);
     assetManager = new AssetManager();
   }
@@ -62,10 +62,11 @@ public class MenuScene extends Scene{
       Entity ground = world.entityManager.createEntity();
       spriteRenderer = new SpriteRenderer();
       spriteRenderer.sprite = base;
-      spriteRenderer.rendererPriority = 1;
       transform = new Transform();
       transform.scale = new Vec3d(1f, 1f,1f);
       transform.position = new Vec3d(a * spriteRenderer.sprite.img.getWidth(),Display.getBuffer().getHeight() - spriteRenderer.sprite.img.getHeight());
+      world.componentManager.addComponent(ground, transform);
+      world.componentManager.addComponent(ground,spriteRenderer);
       world.componentManager.addComponent(ground, transform);
       world.componentManager.addComponent(ground,spriteRenderer);
     }
@@ -77,16 +78,6 @@ public class MenuScene extends Scene{
     transform.scale = new Vec3d(1f, 1f,1f);
     world.componentManager.addComponent(backgroundEntity, transform);
     world.componentManager.addComponent(backgroundEntity,spriteRenderer);
-    //create message
-    Entity messageEntity = world.entityManager.createEntity();
-    UIImage uiImage =  new UIImage();
-    uiImage.sprite = message;
-    uiImage.rendererPriority = 2;
-    transform = new Transform();
-    transform.scale = new Vec3d(1f, 1f,1f);
-    transform.position = new Vec3d(55, 50, 0);
-    world.componentManager.addComponent(messageEntity, transform);
-    world.componentManager.addComponent(messageEntity, uiImage);
 	}
 
 	@Override

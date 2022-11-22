@@ -19,6 +19,11 @@ public class Vec3d{
     this.y = y;
     this.z = z;
   }
+  public Vec3d(Vec3d vec3d){
+    this.x = vec3d.x;
+    this.y = vec3d.y;
+    this.z = vec3d.z;
+  }
   public void add(Vec3d other){
     this.x +=other.x;
     this.y +=other.y;

@@ -13,7 +13,6 @@ public class RendererSystem extends SystemBase{
   public RendererSystem(World world){
     super(world);
     entityQuery = new EntityQuery();
-    entityQuery.withAll(Transform.class,SpriteRenderer.class);
   }
 	@Override
 	public void update(float dt) {
@@ -23,6 +22,7 @@ public class RendererSystem extends SystemBase{
     int bufferh = Display.getBuffer().getHeight();
     g2d.setColor(Color.white);
     g2d.fillRect(0,0,bufferW,bufferh);
+    entityQuery.withAll(Transform.class,SpriteRenderer.class);
     entityQuery.query();
     ArrayList<SpriteRenderer> spriteRenderers= entityQuery.getComponents(SpriteRenderer.class);
     ArrayList<Transform> transforms= entityQuery.getComponents(Transform.class);
@@ -33,7 +33,22 @@ public class RendererSystem extends SystemBase{
       for(int indice: sortedIndices){
         SpriteRenderer spriteRenderer = spriteRenderers.get(indice);
         Transform transform = transforms.get(indice);
-        g2d.drawImage(spriteRenderer.sprite.texture,(int)transform.position.getX(),(int)transform.position.getY(),null);
+        g2d.drawImage(spriteRenderer.sprite.img,(int)transform.position.getX(),(int)transform.position.getY(),null);
+      }
+    }
+    entityQuery.resetFilter();
+    entityQuery.withAll(UIImage.class,Transform.class);
+    entityQuery.query();
+    ArrayList<UIImage> uiImages = entityQuery.getComponents(UIImage.class);
+    transforms = entityQuery.getComponents(Transform.class);
+    if(uiImages.size() == transforms.size()){
+      int[] sortedIndices = IntStream.range(0,transforms.size()).boxed().sorted((a,b)->{
+        return uiImages.get(a).rendererPriority - uiImages.get(b).rendererPriority;
+      }).mapToInt(indice -> indice).toArray();
+      for(int indice: sortedIndices){
+        UIImage uiImage = uiImages.get(indice);
+        Transform transform = transforms.get(indice);
+        g2d.drawImage(uiImage.sprite.img,(int)transform.position.getX(),(int)transform.position.getY(),null);
       }
     }
 
