@@ -15,6 +15,14 @@ public class Input implements KeyListener{
   public static boolean getKey(KeyCode keyCode){
     return keys.get(keyCode);
   }
+  public static void resetKeys(){
+    for(KeyCode key: keys.keySet()){
+      keys.replace(key, false);
+    }
+  }
+  public static void resetKey(KeyCode keyCode){
+      keys.replace(keyCode, false);
+  }
 	@Override
 	public void keyPressed(KeyEvent keyEvent) {
     KeyCode keyCode = KeyCode.valueOf(keyEvent.getKeyCode());

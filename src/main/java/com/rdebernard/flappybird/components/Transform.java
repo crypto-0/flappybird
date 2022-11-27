@@ -21,9 +21,9 @@ public class Transform implements Component{
 
   }
   public Transform(Vec3d position, Vec3d rotation,Vec3d scale){
-    this.position = position;
-    this.rotation = rotation;
-    this.scale = scale;
+    this.position = new Vec3d(position);
+    this.rotation = new Vec3d(rotation);
+    this.scale = new Vec3d(scale);
     localPosition=new Vec3d();
     localRotation = new Vec3d();
     localScale = new Vec3d(1,1,1);

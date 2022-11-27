@@ -15,6 +15,13 @@ public class Collision implements Component{
     this.xnormal = 0;
     this.ynormal = 0;
   }
+  public Collision(Entity entity1,Entity entity2){
+    this.entity1 = entity1;
+    this.entity2 = entity2;
+    this.collisionTime = 0;
+    this.xnormal = 0;
+    this.ynormal = 0;
+  }
   public Collision(Entity entity1,Entity entity2,double collisionTime,byte xnormal,byte ynormal){
     this.entity1 = entity1;
     this.entity2 = entity2;

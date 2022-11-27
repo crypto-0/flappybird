@@ -35,6 +35,7 @@ public class MenuScene extends Scene{
     //register systems
     world.systemManager.addSystem(new RendererSystem(world));
     world.systemManager.addSystem(new AnimationSystem(world));
+    world.systemManager.addSystem(new MenuSceneSystem(world));
     //register components
     world.componentManager.registerComponents(SpriteRenderer.class);
     world.componentManager.registerComponents(Transform.class);
@@ -92,6 +93,11 @@ public class MenuScene extends Scene{
 	@Override
 	public void onDeactivate() {
     assetManager.clearAssets();
+    world.entityManager.clearEntities();
+    world.componentManager.clearComponents();
+    world.entityStateMachineManager.clearStateMachines();
+    world.prefabManager.clearPrefabs();
+    world.systemManager.clearSystems();
 	}
 
   private void loadResources(){

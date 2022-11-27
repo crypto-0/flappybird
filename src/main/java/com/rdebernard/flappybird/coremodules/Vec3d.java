@@ -54,6 +54,16 @@ public class Vec3d{
     this.y *=value;
     this.z *=value;
   }
+  public void div(Vec3d other){
+    this.x /=other.x;
+    this.y /=other.y;
+    this.z /=other.z;
+  }
+  public void div(float value){
+    this.x /=value;
+    this.y /=value;
+    this.z /=value;
+  }
   public float getX() {
     return x;
   }

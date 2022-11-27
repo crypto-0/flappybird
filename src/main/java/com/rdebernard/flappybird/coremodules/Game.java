@@ -7,7 +7,6 @@ import com.rdebernard.phanes.entities.*;
 import com.rdebernard.phanes.scenes.*;
 public class Game extends JPanel implements Runnable
 {
-  private World world;
   private Thread animator;
   private volatile boolean running = false;
   private int TARGET_FPS = 60;
@@ -18,15 +17,18 @@ public class Game extends JPanel implements Runnable
     setBackground(Color.white);
     setFocusable(true);
     setPreferredSize(new Dimension(PWIDTH, PHEIGHT));
-    world = new World();
-    //Display.buffer = new BufferedImage(PWIDTH,PHEIGHT,BufferedImage.TYPE_INT_RGB);
     Display.setRenderingResolution(PWIDTH,PHEIGHT);
   }
 
   public void init(){
-    Scene menuScene= new MenuScene(world);
-    World.sceneManager.addScene("menuScene",menuScene);
-    World.sceneManager.loadScene("menuScene",false);
+    Scene menuScene= new MenuScene(new World());
+    Scene mainScene= new MainScene(new World());
+    Scene gameOver = new GameOverScene(new World());
+    World.sceneManager.addScene("menu",menuScene);
+    World.sceneManager.addScene("main",mainScene);
+    World.sceneManager.addScene("gameover",gameOver);
+    World.sceneManager.loadScene("menu",false);
+    //World.sceneManager.loadScene("gameover",false);
     addKeyListener(new Input());
     start();
   }
@@ -47,7 +49,8 @@ public class Game extends JPanel implements Runnable
     beforeTime = java.lang.System.currentTimeMillis();
     running = true;;
     while (running) {
-      world.systemManager.update(dt * .001f * TARGET_FPS);
+      //world.systemManager.update(dt * .001f * TARGET_FPS);
+      World.sceneManager.update(dt * .001f * TARGET_FPS);
       paintScreen();
       afterTime = java.lang.System.currentTimeMillis();
       timeDiff = afterTime - beforeTime;
@@ -80,7 +83,13 @@ public class Game extends JPanel implements Runnable
         Toolkit.getDefaultToolkit().sync();
         g.dispose();
       }
-    }
+      Graphics2D g2d = Display.getBuffer().createGraphics(); 
+      if(g2d == null)return;
+      int bufferW = Display.getBuffer().getWidth();
+      int bufferh = Display.getBuffer().getHeight();
+      g2d.setColor(Color.white);
+      g2d.fillRect(0,0,bufferW,bufferh);
+      }
     catch (Exception e) {
       java.lang.System.out.println("Graphics context error: " + e);
     }

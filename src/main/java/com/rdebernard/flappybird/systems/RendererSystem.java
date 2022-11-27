@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.stream.IntStream;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 
 public class RendererSystem extends SystemBase{
   EntityQuery entityQuery;
@@ -18,10 +19,7 @@ public class RendererSystem extends SystemBase{
 	public void update(float dt) {
     Graphics2D g2d = Display.getBuffer().createGraphics(); 
     if(g2d == null)return;
-    int bufferW = Display.getBuffer().getWidth();
-    int bufferh = Display.getBuffer().getHeight();
     g2d.setColor(Color.white);
-    g2d.fillRect(0,0,bufferW,bufferh);
     entityQuery.withAll(Transform.class,SpriteRenderer.class);
     entityQuery.query();
     ArrayList<SpriteRenderer> spriteRenderers= entityQuery.getComponents(SpriteRenderer.class);
@@ -32,8 +30,12 @@ public class RendererSystem extends SystemBase{
       }).mapToInt(indice -> indice).toArray();
       for(int indice: sortedIndices){
         SpriteRenderer spriteRenderer = spriteRenderers.get(indice);
+        if(!spriteRenderer.enabled)continue;
         Transform transform = transforms.get(indice);
-        g2d.drawImage(spriteRenderer.sprite.img,(int)transform.position.getX(),(int)transform.position.getY(),null);
+        //g2d.drawImage(spriteRenderer.sprite.img,(int)transform.position.getX(),(int)transform.position.getY(),null);
+        AffineTransform at = AffineTransform.getTranslateInstance((int)(transform.position.getX()),(int)transform.position.getY());
+        at.rotate(Math.toRadians(transform.rotation.getZ()),spriteRenderer.sprite.img.getWidth()/2,spriteRenderer.sprite.img.getHeight()/2);
+        g2d.drawImage(spriteRenderer.sprite.img,at,null);
       }
     }
     entityQuery.resetFilter();
@@ -47,11 +49,24 @@ public class RendererSystem extends SystemBase{
       }).mapToInt(indice -> indice).toArray();
       for(int indice: sortedIndices){
         UIImage uiImage = uiImages.get(indice);
+        if(!uiImage.enabled)continue;
         Transform transform = transforms.get(indice);
         g2d.drawImage(uiImage.sprite.img,(int)transform.position.getX(),(int)transform.position.getY(),null);
       }
     }
 
+    /*
+    entityQuery.resetFilter();
+    entityQuery.withAll(Collider.class,Transform.class);
+    entityQuery.query();
+    transforms= entityQuery.getComponents(Transform.class);
+    ArrayList<Collider> colliders = entityQuery.getComponents(Collider.class);
+    for(int a=0; a< colliders.size();a++){
+        Collider collider = colliders.get(a);
+        Transform transform = transforms.get(a);
+        g2d.drawRect((int)transform.position.getX(),(int)transform.position.getY(),collider.width,collider.height);
+    }
+    */
     g2d.dispose();
 	}
 }

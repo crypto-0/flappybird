@@ -10,13 +10,13 @@ public class UIImage extends Renderer implements Component{
     this.sprite = null;
     this.color = null;
     this.rendererPriority = 0;
-    this.enabled = false;
+    this.enabled = true;
   }
   public UIImage(Sprite sprite,int rendererPriority){
     this.sprite = sprite;
     this.rendererPriority = rendererPriority;
     this.color = null;
-    this.enabled = false;
+    this.enabled = true;
 
   }
   public UIImage(UIImage uiImage){

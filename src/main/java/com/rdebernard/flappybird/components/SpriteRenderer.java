@@ -10,7 +10,7 @@ public class SpriteRenderer extends Renderer implements Component{
     this.sprite = null;
     this.color = null;
     this.rendererPriority = 0;
-    this.enabled = false;
+    this.enabled = true;
     this.flipx = false;
     this.flipy = false;
   }
@@ -18,7 +18,7 @@ public class SpriteRenderer extends Renderer implements Component{
     this.sprite = sprite;
     this.rendererPriority = rendererPriority;
     this.color = null;
-    this.enabled = false;
+    this.enabled = true;
     this.flipx = false;
     this.flipy = false;
   }
@@ -27,6 +27,7 @@ public class SpriteRenderer extends Renderer implements Component{
     this.color  = other.color;
     this.flipx = other.flipx;
     this.flipy = other.flipy;
+    this.rendererPriority = other.rendererPriority;
     this.enabled = other.enabled;
   }
 }

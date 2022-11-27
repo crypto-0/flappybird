@@ -22,8 +22,8 @@ public class RigidBody implements Component{
   }
 
   public RigidBody(RigidBody rigidBody){
-    this.velocity = rigidBody.velocity;
-    this.force = rigidBody.force;
+    this.velocity = new Vec3d(rigidBody.velocity);
+    this.force = new Vec3d(rigidBody.force);
     this.mass = rigidBody.mass;
     this.gravity = rigidBody.gravity;
   }
