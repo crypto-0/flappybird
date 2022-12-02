@@ -82,7 +82,8 @@ $ java -jar target/flappybird-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 <!-- ROADMAP -->
 ## Demo
-<img src="flappybird.gif" width="288" height="512"/>
+<!--<img src="flappybird.gif" width="288" height="512"/>-->
+<img src="flappybird.gif" />
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- LICENSE -->
